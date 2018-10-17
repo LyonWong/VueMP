@@ -4,5 +4,5 @@ module.exports = {
   port: '8080',
   subDir: 'static',
   assets: '/',
-  api: 'localhost:8080'
+  apiBase: 'https://api.base'
 }

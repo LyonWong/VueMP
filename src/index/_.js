@@ -28,25 +28,11 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-app.onShare = (options) => {
-  wx.onMenuShareTimeline(options)
-  wx.onMenuShareAppMessage(options)
-  wx.onMenuShareQQ(options)
-  wx.onMenuShareWeibo(options)
-}
+api.options.baseURL = app.config.local.apiBase
 
 Vue.prototype.wx = wx
 Vue.prototype.api = api
 Vue.prototype.app = app
-window.api = api
-
-Vue.filter('sum', (val) => {
-  let sum = 0
-  for (let i in val) {
-    sum += val[i]
-  }
-  return sum
-})
 
 /* eslint-disable no-new */
 new Vue({

@@ -3,33 +3,19 @@
  * Date: 2018-05-16
  */
 
-import app from './app'
 import axios from 'axios'
 
-let domLoading = document.querySelector('#loading')
-let styLoading = domLoading ? domLoading.style : {}
-
 let api = {
-  loading: 0,
+  options: {
+    baseURL: 'http://api.com'
+  },
   request: function(method, url, data, options) {
-    options = options || {}
+    options = {...this.options, ...options}
     options.method = method
     options.url = url
     options.data = data
-    api.loading ++;
-    if (options.loading !== false) {
-      styLoading.display = 'flex'
-    }
-    if (options.loading) {
-      domLoading.innerHTML += '&nbsp'
-      domLoading.append(options.loading)
-    }
     return new Promise((resolve, reject) => {
       axios.request(options).then( (response) => {
-        if (--api.loading === 0) {
-          styLoading.display = 'none'
-          domLoading.innerHTML = '<i></i>'
-        }
         if (response.data.error === '0') {
           resolve(response.data)
         } else {
@@ -44,16 +30,6 @@ let api = {
   },
   post: function(path, data, options={}) {
     return api.request('post', path, data, options)
-  },
-  onErrorBase: function(res) {
-    alert(res.message)
-  },
-  onErrorSign: function(res) {
-    if (res.error === '1') { // 接口返回未登录错误时，动用app登录方法
-      app.signIn()
-    } else {
-      api.onErrorBase(res)
-    }
   }
 }
 

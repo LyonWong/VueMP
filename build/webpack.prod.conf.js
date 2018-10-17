@@ -34,7 +34,7 @@ utils.globNames(`./page/${APP_PAGE}.html`).forEach((page) => {
   entry[page] = `./src/${page}/_.js`
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     template: `./page/${page}.html`,
-    filename: `./entry/${page}.php`,
+    filename: `./entry/${page}.html`,
     chunks: ['manifest', 'vendor', page],
     inject: true,
     minify: {
